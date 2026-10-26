@@ -1,0 +1,74 @@
+name: iot-mc1-server-room
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.21
+    user: "1883:1883"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8883:8883"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/config/acl:/mosquitto/config/acl:ro
+      - ./.runtime/mosquitto/passwd:/mosquitto/config/passwd:ro
+      - ./.runtime/certs:/mosquitto/certs:ro
+      - mqtt-data:/mosquitto/data
+    healthcheck:
+      # Лише перевірка TCP-listener; авторизований обмін перевіряє smoke.py.
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 8883"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+    networks: [iot]
+
+  openhab:
+    build:
+      context: .
+      dockerfile: openhab/Dockerfile
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Kyiv
+      USER_ID: "9001"
+      GROUP_ID: "9001"
+      EXTRA_JAVA_OPTS: "-Duser.timezone=Europe/Kyiv"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./.runtime/openhab-conf:/openhab/conf
+      - openhab-data:/openhab/userdata
+      - openhab-addons:/openhab/addons
+    depends_on:
+      mosquitto: {condition: service_healthy}
+    networks: [iot]
+
+  simulator:
+    build: ./simulator
+    restart: unless-stopped
+    env_file: ./.runtime/simulator.env
+    environment:
+      CONTROL_DIR: /control
+    volumes:
+      - ./.runtime/certs/ca.crt:/certs/ca.crt:ro
+      - ./.runtime/control:/control
+    depends_on:
+      mosquitto: {condition: service_healthy}
+    networks: [iot]
+
+  tools:
+    build: ./simulator
+    profiles: [tools]
+    env_file: ./.runtime/tools.env
+    working_dir: /project
+    entrypoint: ["python"]
+    command: ["scripts/smoke.py"]
+    volumes:
+      - ./:/project:ro
+      - ./.runtime/certs/ca.crt:/certs/ca.crt:ro
+    networks: [iot]
+
+networks:
+  iot:
+    driver: bridge
+volumes:
+  mqtt-data:
+  openhab-data:
+  openhab-addons:

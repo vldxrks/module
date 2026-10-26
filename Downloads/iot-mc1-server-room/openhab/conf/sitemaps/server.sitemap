@@ -1,0 +1,39 @@
+sitemap server label="Серверна | Варіант 2" {
+  Frame label="Тривоги та повідомлення" {
+    Text item=Alarm_Message
+    Text item=System_Alarm valuecolor=[ON="red", OFF="green"]
+    Text item=Heat_Warning
+    Text item=Critical_Alarm
+    Text item=Water_Alarm
+    Text item=UPS_Alarm
+    Text item=Missing_Alarm
+  }
+  Frame label="Сенсори" {
+    Text item=Cold_Temperature
+    Text item=Hot_Temperature
+    Text item=Humidity
+    Text item=Leak
+    Text item=Door
+    Text item=UPS_Mode
+    Text item=UPS_Battery
+  }
+  Frame label="Актуатори (автоматика має пріоритет)" {
+    Switch item=AC_Power
+    Selection item=AC_Mode mappings=[NORMAL="Нормальний", MAX="Максимум"]
+    Switch item=Siren_Power
+    Selection item=Siren_Light mappings=[GREEN="Зелений", YELLOW="Жовтий", RED="Червоний"]
+  }
+  Frame label="Температура за останню годину" {
+    Chart item=gTemperatures period=h service="rrd4j" refresh=10000
+  }
+  Frame label="Зв'язок із пристроями" {
+    Text item=Cold_Status
+    Text item=Hot_Status
+    Text item=Humidity_Status
+    Text item=Leak_Status
+    Text item=Door_Status
+    Text item=UPS_Status
+    Text item=AC_Status
+    Text item=Siren_Status
+  }
+}

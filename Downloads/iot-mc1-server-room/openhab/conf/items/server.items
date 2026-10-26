@@ -1,0 +1,27 @@
+Group gTemperatures "Температури" <temperature>
+Number Cold_Temperature "Холодний коридор [%.1f °C]" (gTemperatures) { channel="mqtt:topic:secure:server:cold_temperature" }
+Number Hot_Temperature "Гарячий коридор [%.1f °C]" (gTemperatures) { channel="mqtt:topic:secure:server:hot_temperature" }
+Number Humidity "Вологість [%.1f %%]" { channel="mqtt:topic:secure:server:humidity_value" }
+Switch Leak "Протікання [%s]" { channel="mqtt:topic:secure:server:leak_value" }
+Contact Door "Двері [%s]" { channel="mqtt:topic:secure:server:door_value" }
+String UPS_Mode "Живлення ДБЖ [%s]" { channel="mqtt:topic:secure:server:ups_mode" }
+Number UPS_Battery "Заряд ДБЖ [%.0f %%]" { channel="mqtt:topic:secure:server:ups_battery" }
+Switch AC_Power "Кондиціонер [%s]" { channel="mqtt:topic:secure:server:ac_power", autoupdate="false" }
+String AC_Mode "Режим кондиціонера [%s]" { channel="mqtt:topic:secure:server:ac_mode", autoupdate="false" }
+Switch Siren_Power "Сирена [%s]" { channel="mqtt:topic:secure:server:siren_power", autoupdate="false" }
+String Siren_Light "Світлова індикація [%s]" { channel="mqtt:topic:secure:server:siren_light", autoupdate="false" }
+String Cold_Status "cold: [%s]" { channel="mqtt:topic:secure:server:cold_status" }
+String Hot_Status "hot: [%s]" { channel="mqtt:topic:secure:server:hot_status" }
+String Humidity_Status "humidity: [%s]" { channel="mqtt:topic:secure:server:humidity_status" }
+String Leak_Status "leak: [%s]" { channel="mqtt:topic:secure:server:leak_status" }
+String Door_Status "door: [%s]" { channel="mqtt:topic:secure:server:door_status" }
+String UPS_Status "ups: [%s]" { channel="mqtt:topic:secure:server:ups_status" }
+String AC_Status "ac: [%s]" { channel="mqtt:topic:secure:server:ac_status" }
+String Siren_Status "siren: [%s]" { channel="mqtt:topic:secure:server:siren_status" }
+Switch Heat_Warning "Перегрів [%s]"
+Switch Critical_Alarm "Критична температура [%s]"
+Switch Water_Alarm "Протікання [%s]"
+Switch UPS_Alarm "Низький заряд ДБЖ [%s]"
+Switch Missing_Alarm "Немає даних [%s]"
+Switch System_Alarm "Загальна тривога [%s]"
+String Alarm_Message "Повідомлення [%s]"

@@ -1,0 +1,29 @@
+// Пароль підставляє scripts/bootstrap.py лише в .runtime/openhab-conf.
+Bridge mqtt:broker:secure "Mosquitto TLS" [
+    host="mosquitto", port=8883, secure=true, hostnameValidated=true,
+    username="openhab", password="__OPENHAB_PASSWORD__",
+    clientID="openhab-server", qos=1, keepAlive=10, reconnectTime=5000
+] {
+    Thing topic server "Серверна" {
+        Channels:
+            Type number : cold_temperature [stateTopic="office/server/cold/telemetry", transformationPattern="JSONPATH:$.value", qos=1]
+            Type number : hot_temperature [stateTopic="office/server/hot/telemetry", transformationPattern="JSONPATH:$.value", qos=1]
+            Type number : humidity_value [stateTopic="office/server/humidity/telemetry", transformationPattern="JSONPATH:$.value", qos=1]
+            Type switch : leak_value [stateTopic="office/server/leak/telemetry", transformationPattern="JSONPATH:$.value", qos=1]
+            Type contact : door_value [stateTopic="office/server/door/telemetry", transformationPattern="JSONPATH:$.value", qos=1]
+            Type string : ups_mode [stateTopic="office/server/ups/telemetry", transformationPattern="JSONPATH:$.mode", qos=1]
+            Type number : ups_battery [stateTopic="office/server/ups/telemetry", transformationPattern="JSONPATH:$.battery", qos=1]
+            Type switch : ac_power [stateTopic="office/server/ac/state", transformationPattern="JSONPATH:$.state", qos=1, commandTopic="office/server/ac/set", formatBeforePublish="{\"state\":\"%s\"}", retained=false]
+            Type string : ac_mode [stateTopic="office/server/ac/state", transformationPattern="JSONPATH:$.mode", qos=1, commandTopic="office/server/ac/set", formatBeforePublish="{\"mode\":\"%s\"}", retained=false]
+            Type switch : siren_power [stateTopic="office/server/siren/state", transformationPattern="JSONPATH:$.state", qos=1, commandTopic="office/server/siren/set", formatBeforePublish="{\"state\":\"%s\"}", retained=false]
+            Type string : siren_light [stateTopic="office/server/siren/state", transformationPattern="JSONPATH:$.light", qos=1, commandTopic="office/server/siren/set", formatBeforePublish="{\"light\":\"%s\"}", retained=false]
+            Type string : cold_status [stateTopic="office/server/cold/status", qos=1]
+            Type string : hot_status [stateTopic="office/server/hot/status", qos=1]
+            Type string : humidity_status [stateTopic="office/server/humidity/status", qos=1]
+            Type string : leak_status [stateTopic="office/server/leak/status", qos=1]
+            Type string : door_status [stateTopic="office/server/door/status", qos=1]
+            Type string : ups_status [stateTopic="office/server/ups/status", qos=1]
+            Type string : ac_status [stateTopic="office/server/ac/status", qos=1]
+            Type string : siren_status [stateTopic="office/server/siren/status", qos=1]
+    }
+}

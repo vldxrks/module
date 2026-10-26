@@ -1,0 +1,32 @@
+Перевірка 26.10.2026
+
+$ python3 -m unittest discover -s tests -p test_*.py -v
+test_all_sensor_payloads_are_json (test_model.ModelTests.test_all_sensor_payloads_are_json) ... ok
+test_duplicate_commands_are_idempotent_and_partial (test_model.ModelTests.test_duplicate_commands_are_idempotent_and_partial) ... ok
+test_heat_scenarios_cross_real_thresholds (test_model.ModelTests.test_heat_scenarios_cross_real_thresholds) ... ok
+test_invalid_commands_do_not_change_state (test_model.ModelTests.test_invalid_commands_do_not_change_state) ... ok
+test_leak_ups_door_and_reset (test_model.ModelTests.test_leak_ups_door_and_reset) ... ok
+test_normal_ranges_and_smoothness (test_model.ModelTests.test_normal_ranges_and_smoothness) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
+
+$ node --test tests/policy.test.js tests/rules.test.js
+✔ normal, strict 35/40 boundaries and AC hysteresis (2.319842ms)
+✔ leak independently activates siren in normal room (0.332601ms)
+✔ UPS requires both BATTERY and strictly less than 30 (0.282738ms)
+✔ clearing heat cannot silence an ongoing leak/UPS alarm (0.216048ms)
+✔ offline more than 60 seconds even with a recent stale value (0.267605ms)
+✔ online without new telemetry still alarms; all six sensors covered (0.261687ms)
+✔ NULL-like hot values never become a false temperature reading (0.177982ms)
+✔ four registered rules use shared output arbitration and update real Item names (4.845209ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.13011

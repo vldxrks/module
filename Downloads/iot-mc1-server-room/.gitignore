@@ -1,0 +1,13 @@
+.env
+.runtime/
+__pycache__/
+*.pyc
+.venv/
+.native-check-*/
+*.key
+*.csr
+*.srl
+*.p12
+*.jks
+docs/screenshots/*.png
+!docs/screenshots/README.md

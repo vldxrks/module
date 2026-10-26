@@ -1,0 +1,6 @@
+*
+!openhab
+!openhab/Dockerfile
+!.runtime
+!.runtime/certs
+!.runtime/certs/ca.crt

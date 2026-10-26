@@ -1,0 +1,45 @@
+# Кожна MQTT-ідентичність має лише власні топіки.
+
+user cold
+topic write office/server/cold/status
+topic write office/server/cold/telemetry
+
+user hot
+topic write office/server/hot/status
+topic write office/server/hot/telemetry
+
+user humidity
+topic write office/server/humidity/status
+topic write office/server/humidity/telemetry
+
+user leak
+topic write office/server/leak/status
+topic write office/server/leak/telemetry
+
+user door
+topic write office/server/door/status
+topic write office/server/door/telemetry
+
+user ups
+topic write office/server/ups/status
+topic write office/server/ups/telemetry
+
+user ac
+topic write office/server/ac/status
+topic read office/server/ac/set
+topic write office/server/ac/state
+
+user siren
+topic write office/server/siren/status
+topic read office/server/siren/set
+topic write office/server/siren/state
+
+user openhab
+topic read office/server/+/telemetry
+topic read office/server/+/state
+topic read office/server/+/status
+topic write office/server/ac/set
+topic write office/server/siren/set
+
+user admin
+topic readwrite office/server/#

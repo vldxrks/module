@@ -1,0 +1,7 @@
+Strategies {
+    everyTenSeconds : "0/10 * * * * ?"
+    default = everyChange
+}
+Items {
+    Cold_Temperature, Hot_Temperature, Humidity, UPS_Battery : strategy = everyChange, everyTenSeconds
+}
